@@ -1,0 +1,207 @@
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 1
+
+
+
+
+
+       MCS-51 Family Macro Assembler   A S E M - 5 1   V 1.3
+       =====================================================
+
+
+
+	Source File:	C:\Users\orient.com\Desktop\ALL FOLDERS\TNY PRO\TONY_PROJECT.asm
+	Object File:	C:\Users\orient.com\Desktop\ALL FOLDERS\TNY PRO\TONY_PROJECT.hex
+	List File:	C:\Users\orient.com\Desktop\ALL FOLDERS\TNY PRO\TONY_PROJECT.lst
+
+
+
+ Line  I  Addr  Code            Source
+
+    1:		N      0000	 org 00h
+    2:		B	 90	 sens bit p1.0
+    3:		B	 91	 limit_open bit p1.1
+    4:		B	 92	 limit_close bit p1.2
+    5:		B	 A0	 open bit p2.0
+    6:		B	 A1	 close bit p2.1
+    7:	  0000	75 90 FF	 mov p1, #0ffh
+    8:	  0003	75 A0 00	 mov p2, #00h
+    9:	  0006	D2 A3		 setb p2.3
+   10:
+   11:	  0008			 start:
+   12:	  0008	78 04		 mov r0,#4
+   13:	  000A			 here:
+   14:	  000A	C2 A3		 clr p2.3
+   15:	  000C	12 00 4F	 call delays
+   16:	  000F	D2 A3		 setb p2.3
+   17:	  0011	12 00 4F	 call delays
+   18:	  0014	D8 F4		 djnz r0,here
+   19:
+   20:	  0016	20 90 FD	 sense: 	jb sens,sense
+   21:	  0019	12 00 42	 		call delay
+   22:	  001C	D2 A0		 		setb open
+   23:	  001E	20 91 FD	 LimitOpen:	jb limit_open,LimitOpen
+   24:	  0021	12 00 42	 		call delay
+   25:	  0024	C2 A0		 		clr open
+   26:	  0026	12 00 35	 		call delay_1s
+   27:	  0029	D2 A1		 		setb close
+   28:	  002B	20 92 FD	 stop:		jb  limit_close,stop
+   29:	  002E	12 00 42	 		call delay
+   30:	  0031	C2 A1		 		clr close
+   31:	  0033	80 D3		 		jmp start
+   32:	  0035			 delay_1s:
+   33:	  0035	79 FB		 		PET:Mov R1,#251
+   34:	  0037	7A 33		    		Mov R2,#51
+   35:	  0039	7B 10		    		Mov R3,#16
+   36:	  003B	D9 FE		MEG:		Djnz R1,MEG
+   37:	  003D	DA FC		    		Djnz R2,MEG
+   38:	  003F	DB FA		    		Djnz R3,MEG
+   39:	  0041	22				Ret
+   40:	  0042			delay:
+   41:	  0042	79 16		PET1:		Mov R1,#22
+   42:	  0044	7A 86		    		Mov R2,#134
+   43:	  0046	7B 02		    		Mov R3,#2
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 2
+
+
+
+ Line  I  Addr  Code            Source
+
+   44:	  0048	D9 FE		MEG1:		Djnz R1,MEG1
+   45:	  004A	DA FC		    		Djnz R2,MEG1
+   46:	  004C	DB FA		    		Djnz R3,MEG1
+   47:	  004E	22				Ret
+   48:	  004F			delays:
+   49:	  004F	79 BD		PET2:	Mov R1,#189
+   50:	  0051	7A CD		 	Mov R2,#205
+   51:	  0053	7B 04		    	Mov R3,#4
+   52:	  0055	D9 FE		MEG2:	Djnz R1,MEG2
+   53:	  0057	DA FC		    	Djnz R2,MEG2
+   54:	  0059	DB FA		    	Djnz R3,MEG2
+   55:	  005B	22			Ret
+   56:
+   57:						end
+   58:
+   59:
+
+
+
+
+
+                     register banks used:  ---
+
+                     no errors
+
+
+
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 3
+
+
+
+
+
+	       L I S T   O F   S Y M B O L S
+	       =============================
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+??ASEM_51			  NUMBER    8051
+??VERSION			  NUMBER    0130
+AC				  BIT	      D6
+ACC				  DATA	      E0
+B				  DATA	      F0
+CLOSE				  BIT	      A1	   6
+CY				  BIT	      D7
+DELAY				  CODE	    0042	  40
+DELAYS				  CODE	    004F	  48
+DELAY_1S			  CODE	    0035	  32
+DPH				  DATA	      83
+DPL				  DATA	      82
+EA				  BIT	      AF
+ES				  BIT	      AC
+ET0				  BIT	      A9
+ET1				  BIT	      AB
+EX0				  BIT	      A8
+EX1				  BIT	      AA
+EXTI0				  CODE	    0003
+EXTI1				  CODE	    0013
+F0				  BIT	      D5
+HERE				  CODE	    000A	  13
+IE				  DATA	      A8
+IE0				  BIT	      89
+IE1				  BIT	      8B
+INT0				  BIT	      B2
+INT1				  BIT	      B3
+IP				  DATA	      B8
+IT0				  BIT	      88
+IT1				  BIT	      8A
+LIMITOPEN			  CODE	    001E	  23
+LIMIT_CLOSE			  BIT	      92	   4
+LIMIT_OPEN			  BIT	      91	   3
+MEG				  CODE	    003B	  36
+MEG1				  CODE	    0048	  44
+MEG2				  CODE	    0055	  52
+OPEN				  BIT	      A0	   5
+OV				  BIT	      D2
+P				  BIT	      D0
+P0				  DATA	      80
+P1				  DATA	      90
+P2				  DATA	      A0
+P3				  DATA	      B0
+PCON				  DATA	      87
+PET				  CODE	    0035	  33
+PET1				  CODE	    0042	  41
+PET2				  CODE	    004F	  49
+PS				  BIT	      BC
+PSW				  DATA	      D0
+PT0				  BIT	      B9
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 4
+
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+PT1				  BIT	      BB
+PX0				  BIT	      B8
+PX1				  BIT	      BA
+RB8				  BIT	      9A
+RD				  BIT	      B7
+REN				  BIT	      9C
+RESET				  CODE	    0000
+RI				  BIT	      98
+RS0				  BIT	      D3
+RS1				  BIT	      D4
+RXD				  BIT	      B0
+SBUF				  DATA	      99
+SCON				  DATA	      98
+SENS				  BIT	      90	   2
+SENSE				  CODE	    0016	  20
+SINT				  CODE	    0023
+SM0				  BIT	      9F
+SM1				  BIT	      9E
+SM2				  BIT	      9D
+SP				  DATA	      81
+START				  CODE	    0008	  11
+STOP				  CODE	    002B	  28
+T0				  BIT	      B4
+T1				  BIT	      B5
+TB8				  BIT	      9B
+TCON				  DATA	      88
+TF0				  BIT	      8D
+TF1				  BIT	      8F
+TH0				  DATA	      8C
+TH1				  DATA	      8D
+TI				  BIT	      99
+TIMER0				  CODE	    000B
+TIMER1				  CODE	    001B
+TL0				  DATA	      8A
+TL1				  DATA	      8B
+TMOD				  DATA	      89
+TR0				  BIT	      8C
+TR1				  BIT	      8E
+TXD				  BIT	      B1
+WR				  BIT	      B6

@@ -1,0 +1,294 @@
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 1
+
+
+
+
+
+       MCS-51 Family Macro Assembler   A S E M - 5 1   V 1.3
+       =====================================================
+
+
+
+	Source File:	C:\Users\orient.com\Desktop\ALL FOLDERS\TNY PRO\keypad.asm
+	Object File:	C:\Users\orient.com\Desktop\ALL FOLDERS\TNY PRO\keypad.hex
+	List File:	C:\Users\orient.com\Desktop\ALL FOLDERS\TNY PRO\keypad.lst
+
+
+
+ Line  I  Addr  Code            Source
+
+    1:		N      0000	org 00h
+    2:		D      00A0	lcdda equ p2
+    3:		D      0090	keyp equ p1
+    4:		B	 B0	rs bit p3.0
+    5:		B	 B1	e bit p3.1
+    6:	  0000	75 90 FF	mov keyp,#0ffh
+    7:	  0003	75 A0 00	mov lcdda,#00h
+    8:
+    9:	  0006			start:
+   10:	  0006	12 00 A0		call initLCD
+   11:	  0009			scan:
+   12:	  0009	75 90 7F	col1:	mov keyp,#7fh
+   13:	  000C	E5 90			mov a,keyp
+   14:	  000E	B4 7E 05	chek:   cjne a,#7eh,chek1
+   15:	  0011	74 31			mov a,#'1'
+   16:	  0013	12 00 C4		call dwr
+   17:	  0016	B4 7D 05	chek1:	cjne a,#7dh,chek2
+   18:	  0019	74 35			mov a,#'5'
+   19:	  001B	12 00 C4		call dwr
+   20:	  001E	B4 7B 05	chek2:	cjne a,#7bh,chek3
+   21:	  0021	74 39			mov a,#'9'
+   22:	  0023	12 00 C4		call dwr
+   23:	  0026	B4 77 05	chek3:	cjne a,#77h,col2
+   24:	  0029	74 43			mov a,#'C'
+   25:	  002B	12 00 C4		call dwr
+   26:	  002E	75 90 BF	col2:	mov keyp,#0bfh
+   27:	  0031	E5 90			mov a,keyp
+   28:	  0033	B4 BE 05	chek4:	cjne a,#0beh,chek5
+   29:	  0036	74 32			mov a,#'2'
+   30:	  0038	12 00 C4		call dwr
+   31:	  003B	B4 BD 05	chek5:	cjne a,#0bdh,chek6
+   32:	  003E	74 36			mov a,#'6'
+   33:	  0040	12 00 C4		call dwr
+   34:	  0043	B4 BB 05	chek6:	cjne a,#0bbh,chk7
+   35:	  0046	74 30			mov a,#'0'
+   36:	  0048	12 00 C4		call dwr
+   37:	  004B	B4 B7 05	chk7:	cjne a,#0b7h,col3
+   38:	  004E	74 44			mov a,#'D'
+   39:	  0050	12 00 C4		call dwr
+   40:	  0053	75 90 DF	col3:	mov keyp,#0dfh
+   41:	  0056	E5 90			mov a,keyp
+   42:	  0058	B4 DE 05	chk8:	cjne a,#0deh,chk9
+   43:	  005B	74 33			mov a,#'3'
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 2
+
+
+
+ Line  I  Addr  Code            Source
+
+   44:	  005D	12 00 C4		call dwr
+   45:	  0060	B4 DD 05	chk9:	cjne a,#0ddh,here
+   46:	  0063	74 37			mov a,#'7'
+   47:	  0065	12 00 C4		call dwr
+   48:	  0068	B4 DB 05	here:	cjne a,#0dbh,here1
+   49:	  006B	74 41			mov a,#'A'
+   50:	  006D	12 00 C4		call dwr
+   51:	  0070	B4 D7 05	here1:	cjne a,#0d7h,col4
+   52:	  0073	74 2A			mov a,#'*'
+   53:	  0075	12 00 C4		call dwr
+   54:	  0078	75 90 EF	col4:	mov keyp,#0efh
+   55:	  007B	E5 90			mov a,keyp
+   56:	  007D	B4 EE 05	here2:	cjne a,#0eeh,here3
+   57:	  0080	74 34			mov a,#'4'
+   58:	  0082	12 00 C4		call dwr
+   59:	  0085	B4 ED 05	here3:	cjne a,#0edh,here4
+   60:	  0088	74 38			mov a,#'8'
+   61:	  008A	12 00 C4		call dwr
+   62:	  008D	B4 EB 05	here4:	cjne a,#0ebh,here5
+   63:	  0090	74 42			mov a,#'B'
+   64:	  0092	12 00 C4		call dwr
+   65:	  0095	B4 E7 05	here5:	cjne a,#0e7h,final
+   66:	  0098	74 23			mov a,#'#'
+   67:	  009A	12 00 C4		call dwr
+   68:	  009D	02 00 09	final:	ljmp scan
+   69:
+   70:	  00A0			initLCD:
+   71:	  00A0	74 38			mov a,#38h
+   72:	  00A2	11 B9			acall cmdr
+   73:	  00A4	11 D2			acall delay
+   74:	  00A6	74 01			mov a,#01h
+   75:	  00A8	11 B9			acall cmdr
+   76:	  00AA	11 D2			acall delay
+   77:	  00AC	74 0F			mov a,#0fh
+   78:	  00AE	11 B9			acall cmdr
+   79:	  00B0	11 D2			acall delay
+   80:	  00B2	74 80			mov a,#80h
+   81:	  00B4	11 B9			acall cmdr
+   82:	  00B6	11 D2			acall delay
+   83:	  00B8	22			ret
+   84:	  00B9	F5 A0		cmdr:	mov lcdda,a
+   85:	  00BB	C2 B0			clr rs
+   86:	  00BD	D2 B1			setb e
+   87:	  00BF	11 D2			acall delay
+   88:	  00C1	C2 B1			clr e
+   89:	  00C3	22			ret
+   90:	  00C4	F5 A0		dwr:	mov lcdda,a
+   91:	  00C6	D2 B0			setb rs
+   92:	  00C8	D2 B1			setb e
+   93:	  00CA	11 D2			acall delay
+   94:	  00CC	C2 B1			clr e
+   95:	  00CE	12 00 DB		call stay
+   96:	  00D1	22			ret
+   97:	  00D2			delay:
+   98:	  00D2	79 E7		PET:	Mov R1,#231
+   99:	  00D4	7A 27		    	Mov R2,#39
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 3
+
+
+
+ Line  I  Addr  Code            Source
+
+  100:	  00D6	D9 FE		MEG:	Djnz R1,MEG
+  101:	  00D8	DA FC		    	Djnz R2,MEG
+  102:	  00DA	22			Ret
+  103:	  00DB			stay:
+  104:	  00DB	79 7C		PET1:	Mov R1,#124
+  105:	  00DD	7A 9A		    	Mov R2,#154
+  106:	  00DF	7B 08		    	Mov R3,#8
+  107:	  00E1	D9 FE		MEG1:	Djnz R1,MEG1
+  108:	  00E3	DA FC		    	Djnz R2,MEG1
+  109:	  00E5	DB FA		    	Djnz R3,MEG1
+  110:	  00E7	22			Ret
+  111:					end
+  112:
+  113:
+  114:
+  115:
+
+
+
+
+
+                     register banks used:  ---
+
+                     no errors
+
+
+
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 4
+
+
+
+
+
+	       L I S T   O F   S Y M B O L S
+	       =============================
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+??ASEM_51			  NUMBER    8051
+??VERSION			  NUMBER    0130
+AC				  BIT	      D6
+ACC				  DATA	      E0
+B				  DATA	      F0
+CHEK				  CODE	    000E	  14
+CHEK1				  CODE	    0016	  17
+CHEK2				  CODE	    001E	  20
+CHEK3				  CODE	    0026	  23
+CHEK4				  CODE	    0033	  28
+CHEK5				  CODE	    003B	  31
+CHEK6				  CODE	    0043	  34
+CHK7				  CODE	    004B	  37
+CHK8				  CODE	    0058	  42
+CHK9				  CODE	    0060	  45
+CMDR				  CODE	    00B9	  84
+COL1				  CODE	    0009	  12
+COL2				  CODE	    002E	  26
+COL3				  CODE	    0053	  40
+COL4				  CODE	    0078	  54
+CY				  BIT	      D7
+DELAY				  CODE	    00D2	  97
+DPH				  DATA	      83
+DPL				  DATA	      82
+DWR				  CODE	    00C4	  90
+E				  BIT	      B1	   5
+EA				  BIT	      AF
+ES				  BIT	      AC
+ET0				  BIT	      A9
+ET1				  BIT	      AB
+EX0				  BIT	      A8
+EX1				  BIT	      AA
+EXTI0				  CODE	    0003
+EXTI1				  CODE	    0013
+F0				  BIT	      D5
+FINAL				  CODE	    009D	  68
+HERE				  CODE	    0068	  48
+HERE1				  CODE	    0070	  51
+HERE2				  CODE	    007D	  56
+HERE3				  CODE	    0085	  59
+HERE4				  CODE	    008D	  62
+HERE5				  CODE	    0095	  65
+IE				  DATA	      A8
+IE0				  BIT	      89
+IE1				  BIT	      8B
+INITLCD				  CODE	    00A0	  70
+INT0				  BIT	      B2
+INT1				  BIT	      B3
+IP				  DATA	      B8
+IT0				  BIT	      88
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 5
+
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+IT1				  BIT	      8A
+KEYP				  NUMBER    0090	   3
+LCDDA				  NUMBER    00A0	   2
+MEG				  CODE	    00D6	 100
+MEG1				  CODE	    00E1	 107
+OV				  BIT	      D2
+P				  BIT	      D0
+P0				  DATA	      80
+P1				  DATA	      90
+P2				  DATA	      A0
+P3				  DATA	      B0
+PCON				  DATA	      87
+PET				  CODE	    00D2	  98
+PET1				  CODE	    00DB	 104
+PS				  BIT	      BC
+PSW				  DATA	      D0
+PT0				  BIT	      B9
+PT1				  BIT	      BB
+PX0				  BIT	      B8
+PX1				  BIT	      BA
+RB8				  BIT	      9A
+RD				  BIT	      B7
+REN				  BIT	      9C
+RESET				  CODE	    0000
+RI				  BIT	      98
+RS				  BIT	      B0	   4
+RS0				  BIT	      D3
+RS1				  BIT	      D4
+RXD				  BIT	      B0
+SBUF				  DATA	      99
+SCAN				  CODE	    0009	  11
+SCON				  DATA	      98
+SINT				  CODE	    0023
+SM0				  BIT	      9F
+SM1				  BIT	      9E
+SM2				  BIT	      9D
+SP				  DATA	      81
+START				  CODE	    0006	   9
+STAY				  CODE	    00DB	 103
+T0				  BIT	      B4
+T1				  BIT	      B5
+TB8				  BIT	      9B
+TCON				  DATA	      88
+TF0				  BIT	      8D
+TF1				  BIT	      8F
+TH0				  DATA	      8C
+TH1				  DATA	      8D
+TI				  BIT	      99
+TIMER0				  CODE	    000B
+TIMER1				  CODE	    001B
+TL0				  DATA	      8A
+TL1				  DATA	      8B
+TMOD				  DATA	      89
+TR0				  BIT	      8C
+TR1				  BIT	      8E
+TXD				  BIT	      B1
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 6
+
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+WR				  BIT	      B6

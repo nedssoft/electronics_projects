@@ -1,0 +1,183 @@
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 1
+
+
+
+
+
+       MCS-51 Family Macro Assembler   A S E M - 5 1   V 1.3
+       =====================================================
+
+
+
+	Source File:	C:\Users\orient.com\Desktop\ALL FOLDERS\TNY PRO\proxim.asm
+	Object File:	C:\Users\orient.com\Desktop\ALL FOLDERS\TNY PRO\proxim.hex
+	List File:	C:\Users\orient.com\Desktop\ALL FOLDERS\TNY PRO\proxim.lst
+
+
+
+ Line  I  Addr  Code            Source
+
+    1:		N      0000	 org 00h
+    2:		B	 90	 sens bit p1.0
+    3:		B	 91	 limit_open bit p1.1
+    4:		B	 92	 limit_close bit p1.2
+    5:		B	 A0	 open bit p2.0
+    6:		B	 A1	 close bit p2.1
+    7:	  0000	75 90 FF	 mov p1, #0ffh
+    8:	  0003	75 A0 00	 mov p2, #00h
+    9:
+   10:	  0006			 start:
+   11:	  0006	20 90 FD	 sense: 	jb sens,sense
+   12:	  0009	12 00 32	 		call delay
+   13:	  000C	D2 A0		 		setb open
+   14:	  000E	20 91 FD	 LimitOpen:	jb limit_open,LimitOpen
+   15:	  0011	12 00 32	 		call delay
+   16:	  0014	C2 A0		 		clr open
+   17:	  0016	12 00 25	 		call delay_1s
+   18:	  0019	D2 A1		 		setb close
+   19:	  001B	20 92 FD	 stop:		jb  limit_close,stop
+   20:	  001E	12 00 32	 		call delay
+   21:	  0021	C2 A1		 		clr close
+   22:	  0023	80 E1		 		jmp start
+   23:	  0025			 delay_1s:
+   24:	  0025	79 FB		 		PET:Mov R1,#251
+   25:	  0027	7A 33		    		Mov R2,#51
+   26:	  0029	7B 10		    		Mov R3,#16
+   27:	  002B	D9 FE		MEG:		Djnz R1,MEG
+   28:	  002D	DA FC		    		Djnz R2,MEG
+   29:	  002F	DB FA		    		Djnz R3,MEG
+   30:	  0031	22				Ret
+   31:	  0032			delay:
+   32:	  0032	79 16		PET1:		Mov R1,#22
+   33:	  0034	7A 86		    		Mov R2,#134
+   34:	  0036	7B 02		    		Mov R3,#2
+   35:	  0038	D9 FE		MEG1:		Djnz R1,MEG1
+   36:	  003A	DA FC		    		Djnz R2,MEG1
+   37:	  003C	DB FA		    		Djnz R3,MEG1
+   38:	  003E	22				Ret
+   39:						end
+   40:
+   41:
+
+
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 2
+
+
+
+
+
+
+                     register banks used:  ---
+
+                     no errors
+
+
+
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 3
+
+
+
+
+
+	       L I S T   O F   S Y M B O L S
+	       =============================
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+??ASEM_51			  NUMBER    8051
+??VERSION			  NUMBER    0130
+AC				  BIT	      D6
+ACC				  DATA	      E0
+B				  DATA	      F0
+CLOSE				  BIT	      A1	   6
+CY				  BIT	      D7
+DELAY				  CODE	    0032	  31
+DELAY_1S			  CODE	    0025	  23
+DPH				  DATA	      83
+DPL				  DATA	      82
+EA				  BIT	      AF
+ES				  BIT	      AC
+ET0				  BIT	      A9
+ET1				  BIT	      AB
+EX0				  BIT	      A8
+EX1				  BIT	      AA
+EXTI0				  CODE	    0003
+EXTI1				  CODE	    0013
+F0				  BIT	      D5
+IE				  DATA	      A8
+IE0				  BIT	      89
+IE1				  BIT	      8B
+INT0				  BIT	      B2
+INT1				  BIT	      B3
+IP				  DATA	      B8
+IT0				  BIT	      88
+IT1				  BIT	      8A
+LIMITOPEN			  CODE	    000E	  14
+LIMIT_CLOSE			  BIT	      92	   4
+LIMIT_OPEN			  BIT	      91	   3
+MEG				  CODE	    002B	  27
+MEG1				  CODE	    0038	  35
+OPEN				  BIT	      A0	   5
+OV				  BIT	      D2
+P				  BIT	      D0
+P0				  DATA	      80
+P1				  DATA	      90
+P2				  DATA	      A0
+P3				  DATA	      B0
+PCON				  DATA	      87
+PET				  CODE	    0025	  24
+PET1				  CODE	    0032	  32
+PS				  BIT	      BC
+PSW				  DATA	      D0
+PT0				  BIT	      B9
+PT1				  BIT	      BB
+PX0				  BIT	      B8
+PX1				  BIT	      BA
+RB8				  BIT	      9A
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 4
+
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+RD				  BIT	      B7
+REN				  BIT	      9C
+RESET				  CODE	    0000
+RI				  BIT	      98
+RS0				  BIT	      D3
+RS1				  BIT	      D4
+RXD				  BIT	      B0
+SBUF				  DATA	      99
+SCON				  DATA	      98
+SENS				  BIT	      90	   2
+SENSE				  CODE	    0006	  11
+SINT				  CODE	    0023
+SM0				  BIT	      9F
+SM1				  BIT	      9E
+SM2				  BIT	      9D
+SP				  DATA	      81
+START				  CODE	    0006	  10
+STOP				  CODE	    001B	  19
+T0				  BIT	      B4
+T1				  BIT	      B5
+TB8				  BIT	      9B
+TCON				  DATA	      88
+TF0				  BIT	      8D
+TF1				  BIT	      8F
+TH0				  DATA	      8C
+TH1				  DATA	      8D
+TI				  BIT	      99
+TIMER0				  CODE	    000B
+TIMER1				  CODE	    001B
+TL0				  DATA	      8A
+TL1				  DATA	      8B
+TMOD				  DATA	      89
+TR0				  BIT	      8C
+TR1				  BIT	      8E
+TXD				  BIT	      B1
+WR				  BIT	      B6
